@@ -1,4 +1,5 @@
 using MvvmCross.Core.ViewModels;
+using MvvmCross.Platform.Exceptions;
 using MvvmCross.Plugins.Email;
 
 namespace TestMvvmCrossEmailPlugin.Core.ViewModels
@@ -27,7 +28,14 @@ namespace TestMvvmCrossEmailPlugin.Core.ViewModels
                 "commodoconsequat.</p>" +
                 "</body></html>";
 
-            _emailService.ComposeEmail(new string[] { "test@test.com" }, subject: "Is there a bug?", body: body, isHtml: true);
+            try
+            {
+                _emailService.ComposeEmail(new string[] { "test@test.com" }, subject: "Is there a bug?", body: body, isHtml: true);
+            }
+            catch (MvxException ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"MvxException: {ex.Message}");
+            }
         }
     }
 }
